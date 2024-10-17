@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router';
 </script>
 
 <template>
   <v-app>
     <header>
       <v-app-bar color="primary">
-        <v-btn variant="text" :to="{name:'posters'}">Posters</v-btn>
-        <v-btn variant="text" :to="{name:'flyers'}">flyers</v-btn>
-        <v-btn variant="text" :to="{name:'businesscards'}">Business cards</v-btn>
+        <v-btn variant="text" :to="{ name: 'posters' }">Posters</v-btn>
+        <v-btn variant="text" :to="{ name: 'flyers' }">flyers</v-btn>
+        <v-btn variant="text" :to="{ name: 'businesscards' }"
+          >Business cards</v-btn
+        >
         <v-spacer></v-spacer>
         <v-menu>
           <template v-slot:activator="{ props }">
@@ -32,6 +34,4 @@ import { RouterLink, RouterView } from 'vue-router'
   </v-app>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
