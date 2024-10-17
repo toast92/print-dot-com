@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import businessCardsData from '../../../businesscards.json';
+import businessCardsData from '@/data/businesscards.json';
 import ProductSelector from '@/components/ProductSelector.vue';
 </script>
 

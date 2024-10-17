@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Product } from '../types/products.ts';
+import { Product } from '@/types/products.ts';
 defineProps<{
   productData: Product;
 }>();

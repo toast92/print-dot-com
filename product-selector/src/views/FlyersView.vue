@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import flyersData from '../../../flyers.json';
+import flyersData from '@/data/flyers.json';
 import ProductSelector from '@/components/ProductSelector.vue';
 </script>
 
