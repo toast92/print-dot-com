@@ -4,8 +4,8 @@ import ProductSelector from '@/components/ProductSelector.vue';
 </script>
 
 <template>
-  <main>
-    <h2>Flyers</h2>
+  <div>
+    <h2>{{ flyersData.title }}</h2>
     <product-selector :productData="flyersData"></product-selector>
-  </main>
+  </div>
 </template>

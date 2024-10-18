@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import businessCardsData from '@/data/businesscards.json';
 import ProductSelector from '@/components/ProductSelector.vue';
+
 </script>
 
 <template>
-  <main>
-    <h2>Business cards</h2>
+  <div>
+    <h2>{{ businessCardsData.title }}</h2>
     <product-selector :productData="businessCardsData"></product-selector>
-  </main>
+  </div>
 </template>
