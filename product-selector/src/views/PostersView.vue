@@ -5,7 +5,7 @@ import ProductSelector from '@/components/ProductSelector.vue';
 
 <template>
   <div>
-    <h2>{{ postersData.title }}</h2>
+    <h2 class="d-flex justify-center py-10">{{ postersData.title }}</h2>
     <product-selector :productData="postersData"></product-selector>
   </div>
 </template>

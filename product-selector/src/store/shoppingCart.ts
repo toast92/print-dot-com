@@ -1,15 +1,13 @@
 import { defineStore } from 'pinia';
 
-
 type ShoppingCartProduct = {
-  productType: string,
-  properties: [],
-}
-
+  productType: string;
+  properties: [];
+};
 
 export const useShoppingCartStore = defineStore('shoppingCart', {
   state: () => ({
-        products: [] as ShoppingCartProduct[]
+    products: [] as ShoppingCartProduct[],
   }),
   actions: {
     addProduct(product: ShoppingCartProduct) {
@@ -17,6 +15,6 @@ export const useShoppingCartStore = defineStore('shoppingCart', {
     },
     removeProduct(index: number) {
       return this.products.splice(index, 1);
-    }
-  }
-})
+    },
+  },
+});

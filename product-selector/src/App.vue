@@ -12,14 +12,15 @@ import ShoppingCart from '@/components/ShoppingCart.vue';
         <v-btn variant="text" :to="{ name: 'businesscards' }"
           >Business cards</v-btn
         >
+
         <v-spacer></v-spacer>
+
         <shopping-cart></shopping-cart>
       </v-app-bar>
     </header>
+
     <v-main>
       <RouterView />
     </v-main>
   </v-app>
 </template>
-
-<style scoped></style>
