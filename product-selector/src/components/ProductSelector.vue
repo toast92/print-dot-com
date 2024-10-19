@@ -37,6 +37,25 @@ const getItemSlug: string = (item) => {
   return typeName ? `${base}-${typeName}` : base;
 }
 
+const getCustomSizeOptions = (options) => {
+  const customOption = options.find(option => option.slug === 'custom');
+  if(customOption !== undefined){
+    return customOption.customSizes;
+  }
+}
+
+const getHeightRules = (customSizes) => [
+  (v) => !!v || 'Height is required',
+  (v) => v >= customSizes.minHeight || `Height must be at least ${customSizes.minHeight} mm`,
+  (v) => v <= customSizes.maxHeight || `Height must be less than ${customSizes.maxHeight} mm`
+];
+
+const getWidthRules = (customSizes) => [
+  (v) => !!v || 'Width is required',
+  (v) => v >= customSizes.minWidth || `Width must be at least ${customSizes.minWidth} mm`,
+  (v) => v <= customSizes.maxWidth || `Width must be less than ${customSizes.maxWidth} mm`
+];
+
 const handleSubmit = () => {
   const newProduct = constructProduct();
   shoppingCartStore.addProduct(newProduct);
@@ -47,21 +66,31 @@ const handleSubmit = () => {
 <template>
   <div>
     <v-form v-if="productData">
-      <v-select
-        v-for="(property) in productData.properties"
-        :label="property.title"
-        :items="property.options"
-        :key="property.slug"
-        :item-props="itemProps"
-        v-model="selectedValues[property.slug]"
-      >
-    </v-select>
+      <template v-for="property in productData.properties" :key="property.slug">
+        <v-select
+          :label="property.title"
+          :items="property.options"
+          :item-props="itemProps"
+          v-model="selectedValues[property.slug]"
+        />
+        <template v-if="selectedValues[property.slug] === 'custom'">
+          <p>{{ getCustomSizeOptions(property.options) }}</p>
+          <v-text-field
+            v-model="selectedValues[property.slug + '_customHeight']"
+            label="Height(mm)"
+            :rules="getHeightRules(getCustomSizeOptions(property.options))"
+            clearable
+          ></v-text-field>
+          <v-text-field
+            v-model="selectedValues[property.slug + '_customWidth']"
+            label="Width(mm)"
+            :rules="getWidthRules(getCustomSizeOptions(property.options))"
+            clearable
+          ></v-text-field>
+        </template>
+      </template>
       <v-btn class="mt-2" @click="handleSubmit">Submit</v-btn>
     </v-form>
-
-    <div>
-      <h3>Selected Values:</h3>
-    </div>
   </div>
 </template>
 
