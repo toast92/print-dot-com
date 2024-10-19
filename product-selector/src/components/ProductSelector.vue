@@ -17,11 +17,31 @@ const constructProduct = () => {
   }
 }
 
+const itemProps = (item) => {
+  return {
+    title: getItemTitle(item),
+    value: getItemSlug(item),
+  }
+}
+
+const getItemTitle: string = (item) => {
+  const base =  item?.name || item.slug;
+  const typeName = item?.type || null;
+  return typeName ? `${base}-${typeName}` : base;
+}
+
+//slugs were not unique in this case so I constructed unique ones.
+const getItemSlug: string = (item) => {
+  const base =  item.slug;
+  const typeName = item?.type || null;
+  return typeName ? `${base}-${typeName}` : base;
+}
+
 const handleSubmit = () => {
   const newProduct = constructProduct();
   shoppingCartStore.addProduct(newProduct);
   selectedValues.value = {};
-};
+}
 </script>
 
 <template>
@@ -31,13 +51,12 @@ const handleSubmit = () => {
         v-for="(property) in productData.properties"
         :label="property.title"
         :items="property.options"
-        item-title="name"
-        item-value="slug"
         :key="property.slug"
+        :item-props="itemProps"
         v-model="selectedValues[property.slug]"
-      ></v-select>
-
-      <v-btn class="mt-2" @click="handleSubmit" block>Submit</v-btn>
+      >
+    </v-select>
+      <v-btn class="mt-2" @click="handleSubmit">Submit</v-btn>
     </v-form>
 
     <div>
