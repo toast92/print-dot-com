@@ -1,11 +1,11 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 type ShoppingCartProduct = {
   productType: string;
   properties: [];
 };
 
-export const useShoppingCartStore = defineStore('shoppingCart', {
+export const useShoppingCartStore = defineStore("shoppingCart", {
   state: () => ({
     products: [] as ShoppingCartProduct[],
   }),

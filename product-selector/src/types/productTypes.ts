@@ -39,15 +39,15 @@ export interface BusinessCard extends Product {
 
 export interface BusinessCardProperty extends Property {
   slug:
-    | 'fold'
-    | 'size'
-    | 'printtype'
-    | 'material'
-    | 'spot_finish'
-    | 'rounded_corners'
-    | 'copies'
-    | 'clean_cut'
-    | 'printingmethod';
+    | "fold"
+    | "size"
+    | "printtype"
+    | "material"
+    | "spot_finish"
+    | "rounded_corners"
+    | "copies"
+    | "clean_cut"
+    | "printingmethod";
   options: BusinessCardOption[];
 }
 
@@ -62,16 +62,16 @@ export interface Flyer extends Product {
 
 export interface FlyerProperty extends Property {
   slug:
-    | 'size'
-    | 'printtype'
-    | 'material'
-    | 'finish'
-    | 'copies'
-    | 'clean_cut'
-    | 'variable_creasing_line'
-    | 'perforation'
-    | 'die_cut'
-    | 'drillholes';
+    | "size"
+    | "printtype"
+    | "material"
+    | "finish"
+    | "copies"
+    | "clean_cut"
+    | "variable_creasing_line"
+    | "perforation"
+    | "die_cut"
+    | "drillholes";
   options: FlyerOption[];
 }
 
@@ -86,15 +86,15 @@ export interface Poster extends Product {
 
 export interface PosterProperty extends Property {
   slug:
-    | 'size'
-    | 'printtype'
-    | 'material'
-    | 'finish'
-    | 'copies'
-    | 'sheet_size'
-    | 'custom_shape'
-    | 'clean_cut'
-    | 'customer_packing_option';
+    | "size"
+    | "printtype"
+    | "material"
+    | "finish"
+    | "copies"
+    | "sheet_size"
+    | "custom_shape"
+    | "clean_cut"
+    | "customer_packing_option";
   options: PosterOption[];
 }
 

@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { Poster, Flyer, BusinessCard } from '../types/productTypes';
-import { ref } from 'vue';
-import { useShoppingCartStore } from '../store/shoppingCart';
+import { Poster, Flyer, BusinessCard } from "../types/productTypes";
+import { ref } from "vue";
+import { useShoppingCartStore } from "../store/shoppingCart";
 
 const props = defineProps<{
   productData: Poster | Flyer | BusinessCard;
+  color: string;
 }>();
 
 const selectedValues = ref({});
+const snackbar = ref(false);
 const shoppingCartStore = useShoppingCartStore();
 
 const constructProduct = () => {
@@ -37,7 +39,7 @@ const getItemSlug: string = item => {
 };
 
 const getCustomSizeOptions = options => {
-  const customOption = options.find(option => option.slug === 'custom');
+  const customOption = options.find(option => option.slug === "custom");
 
   if (customOption !== undefined) {
     return customOption.customSizes;
@@ -45,7 +47,7 @@ const getCustomSizeOptions = options => {
 };
 
 const getHeightRules = customSizes => [
-  v => !!v || 'Height is required',
+  v => !!v || "Height is required",
   v =>
     v >= customSizes.minHeight ||
     `Height must be at least ${customSizes.minHeight} mm`,
@@ -55,7 +57,7 @@ const getHeightRules = customSizes => [
 ];
 
 const getWidthRules = customSizes => [
-  v => !!v || 'Width is required',
+  v => !!v || "Width is required",
   v =>
     v >= customSizes.minWidth ||
     `Width must be at least ${customSizes.minWidth} mm`,
@@ -67,7 +69,12 @@ const getWidthRules = customSizes => [
 const handleSubmit = () => {
   const newProduct = constructProduct();
   shoppingCartStore.addProduct(newProduct);
+  snackbar.value = true;
   selectedValues.value = {};
+};
+
+const closeSnackbar = () => {
+  snackbar.value = false;
 };
 </script>
 
@@ -76,6 +83,7 @@ const handleSubmit = () => {
     <v-form v-if="productData" class="v-col-5 m-auto">
       <template v-for="property in productData.properties" :key="property.slug">
         <v-select
+          variant="outlined"
           :label="property.title"
           :items="property.options"
           :item-props="itemProps"
@@ -84,6 +92,7 @@ const handleSubmit = () => {
 
         <div v-if="selectedValues[property.slug] === 'custom'" class="d-flex">
           <v-text-field
+            variant="outlined"
             class="pr-5 pl-0 v-col-6"
             v-model="selectedValues[property.slug + '_customHeight']"
             label="Height(mm)"
@@ -92,6 +101,7 @@ const handleSubmit = () => {
           ></v-text-field>
 
           <v-text-field
+            variant="outlined"
             class="v-col-6"
             v-model="selectedValues[property.slug + '_customWidth']"
             label="Width(mm)"
@@ -101,8 +111,30 @@ const handleSubmit = () => {
         </div>
       </template>
 
-      <v-btn class="mt-2" @click="handleSubmit">Add item</v-btn>
+      <div class="d-flex justify-end">
+        <v-btn
+          size="large"
+          flat
+          color="action"
+          class="mt-2"
+          @click="handleSubmit"
+          >Add item</v-btn
+        >
+      </div>
     </v-form>
+    <v-snackbar v-model="snackbar" color="lightgreen" timeout="2000">
+      Your product has been added to the shopping cart
+
+      <template v-slot:actions>
+        <v-btn
+          color="black"
+          variant="text"
+          icon="mdi-close"
+          @click="closeSnackbar"
+        >
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 

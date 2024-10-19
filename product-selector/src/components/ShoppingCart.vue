@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useShoppingCartStore } from '../store/shoppingCart';
+import { useShoppingCartStore } from "../store/shoppingCart";
 
 const shoppingCartStore = useShoppingCartStore();
 </script>
@@ -8,7 +8,7 @@ const shoppingCartStore = useShoppingCartStore();
   <v-menu>
     <template v-slot:activator="{ props }">
       <v-btn v-bind="props" stacked>
-        <v-badge color="error" :content="shoppingCartStore.products.length">
+        <v-badge color="action" :content="shoppingCartStore.products.length">
           <v-icon>mdi-cart-outline</v-icon>
         </v-badge>
       </v-btn>
