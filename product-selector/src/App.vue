@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
+import ShoppingCart from '@/components/ShoppingCart.vue';
 </script>
 
 <template>
@@ -12,20 +13,7 @@ import { RouterView } from 'vue-router';
           >Business cards</v-btn
         >
         <v-spacer></v-spacer>
-        <v-menu>
-          <template v-slot:activator="{ props }">
-            <v-btn v-bind="props" icon="mdi-cart-outline"></v-btn>
-          </template>
-
-          <v-list>
-            <v-list-item>
-              <v-list-item-title>Item 1</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>Item 2</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <shopping-cart></shopping-cart>
       </v-app-bar>
     </header>
     <v-main>

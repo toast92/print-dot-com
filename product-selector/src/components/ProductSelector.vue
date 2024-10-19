@@ -13,9 +13,15 @@ const shoppingCartStore = useShoppingCartStore();
 const constructProduct = () => {
   return {
     productType: props.productData.sku,
-    properties: selectedValues.value,
+    properties: { ...selectedValues.value },
   }
 }
+
+const handleSubmit = () => {
+  const newProduct = constructProduct();
+  shoppingCartStore.addProduct(newProduct);
+  selectedValues.value = {};
+};
 </script>
 
 <template>
@@ -31,7 +37,7 @@ const constructProduct = () => {
         v-model="selectedValues[property.slug]"
       ></v-select>
 
-      <v-btn class="mt-2" @click="shoppingCartStore.addProduct(constructProduct())" block>Submit</v-btn>
+      <v-btn class="mt-2" @click="handleSubmit" block>Submit</v-btn>
     </v-form>
 
     <div>
