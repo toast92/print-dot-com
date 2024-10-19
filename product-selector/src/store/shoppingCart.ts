@@ -14,6 +14,9 @@ export const useShoppingCartStore = defineStore('shoppingCart', {
   actions: {
     addProduct(product: ShoppingCartProduct) {
       this.products.push(product);
+    },
+    removeProduct(index: number) {
+      return this.products.splice(index, 1);
     }
   }
 })
