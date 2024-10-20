@@ -83,12 +83,15 @@ const validationRules = {
 };
 
 const handleSubmit = () => {
-  if (form.value?.validate()) {
-    const newProduct = constructProduct();
-    shoppingCartStore.addProduct(newProduct);
-    snackbar.value = true;
-    selectedValues.value = {};
-  }
+  form.value?.validate().then(({valid: isFormValid}) => {
+    if(isFormValid) {
+      const newProduct = constructProduct();
+      shoppingCartStore.addProduct(newProduct);
+      snackbar.value = true;
+      form.value?.reset();
+      selectedValues.value = {};
+    }
+  })
 };
 
 const closeSnackbar = () => {
