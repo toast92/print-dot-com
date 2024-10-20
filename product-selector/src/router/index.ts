@@ -3,7 +3,9 @@ import { createRouter, createWebHistory } from "vue-router";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: "/", component: () => import("../views/PostersView.vue") },
+    { path: "/",
+      redirect: "/posters",
+    },
     {
       path: "/posters",
       name: "posters",

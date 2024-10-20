@@ -2,20 +2,20 @@ export interface Product {
   sku: string;
   title: string;
   properties: Property[];
-  excludes?: ExcludeRule[];
+  excludes?: ExcludeRules;
 }
 
 export interface Property {
-  slug: string;
+  slug: string | number;
   title: string;
   options: Option[];
 }
 
 export interface Option {
   slug: string | number;
-  name: string;
-  width?: number;
-  height?: number;
+  name?: string;
+  width?: number | string;
+  height?: number | string;
   type?: string;
   customSizes?: CustomSize;
 }
@@ -28,9 +28,11 @@ export interface CustomSize {
 }
 
 export interface ExcludeRule {
-  options: string[];
+  options: (string | number)[];
   property: string;
 }
+
+export type ExcludeRules = ExcludeRule[] | ExcludeRule[][];
 
 // Business Cards
 export interface BusinessCard extends Product {
@@ -38,16 +40,7 @@ export interface BusinessCard extends Product {
 }
 
 export interface BusinessCardProperty extends Property {
-  slug:
-    | "fold"
-    | "size"
-    | "printtype"
-    | "material"
-    | "spot_finish"
-    | "rounded_corners"
-    | "copies"
-    | "clean_cut"
-    | "printingmethod";
+  slug: string;
   options: BusinessCardOption[];
 }
 
@@ -61,17 +54,7 @@ export interface Flyer extends Product {
 }
 
 export interface FlyerProperty extends Property {
-  slug:
-    | "size"
-    | "printtype"
-    | "material"
-    | "finish"
-    | "copies"
-    | "clean_cut"
-    | "variable_creasing_line"
-    | "perforation"
-    | "die_cut"
-    | "drillholes";
+  slug: string;
   options: FlyerOption[];
 }
 
@@ -85,16 +68,7 @@ export interface Poster extends Product {
 }
 
 export interface PosterProperty extends Property {
-  slug:
-    | "size"
-    | "printtype"
-    | "material"
-    | "finish"
-    | "copies"
-    | "sheet_size"
-    | "custom_shape"
-    | "clean_cut"
-    | "customer_packing_option";
+  slug: string;
   options: PosterOption[];
 }
 

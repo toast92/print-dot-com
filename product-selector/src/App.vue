@@ -6,7 +6,7 @@ import ShoppingCart from "@/components/ShoppingCart.vue";
 <template>
   <v-app>
     <header>
-      <v-app-bar flat color="secondary">
+      <v-app-bar flat color="primary">
         <v-btn
           class="fw-bold"
           size="large"

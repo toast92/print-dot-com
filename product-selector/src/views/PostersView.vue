@@ -8,7 +8,6 @@ import ProductSelector from "@/components/ProductSelector.vue";
     <h2 class="d-flex justify-center py-10">{{ postersData.title }}</h2>
     <product-selector
       :productData="postersData"
-      color="poster"
     ></product-selector>
   </div>
 </template>

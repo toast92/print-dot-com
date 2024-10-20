@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { Poster, Flyer, BusinessCard } from "../types/productTypes";
+import type { Poster, Flyer, BusinessCard, PosterOption, FlyerOption, BusinessCardOption, CustomSize } from "../types/productTypes";
 import { ref } from "vue";
 import { useShoppingCartStore } from "../store/shoppingCart";
 
 const props = defineProps<{
   productData: Poster | Flyer | BusinessCard;
-  color: string;
 }>();
 
-const selectedValues = ref({});
+const selectedValues = ref<Record<string, string | number | null>>({});
 const snackbar = ref(false);
 const shoppingCartStore = useShoppingCartStore();
 
@@ -19,50 +18,59 @@ const constructProduct = () => {
   };
 };
 
-const itemProps = item => {
+interface ItemProps {
+  title: string,
+  value: string
+}
+
+interface Item {
+  slug: string | number,
+  name?: string,
+  type?: string
+}
+
+const itemProps = (item: Item): ItemProps => {
   return {
     title: getItemTitle(item),
     value: getItemSlug(item),
   };
 };
 
-const getItemTitle: string = item => {
-  const base = item?.name || item.slug;
+const getItemTitle = (item: Item): string => {
+  const base = item?.name || String(item.slug);
   const type = item?.type || null;
   return type ? `${base}-${type}` : base;
 };
 
-const getItemSlug: string = item => {
-  const base = item.slug;
+const getItemSlug = (item: Item): string=> {
+  const base = String(item.slug);
   const type = item?.type || null;
   return type ? `${base}-${type}` : base;
 };
 
-const getCustomSizeOptions = options => {
-  const customOption = options.find(option => option.slug === "custom");
-
-  if (customOption !== undefined) {
-    return customOption.customSizes;
-  }
+const getCustomSizeOptions = (options: PosterOption[] | FlyerOption[] | BusinessCardOption[]): CustomSize | undefined=> {
+  const customOption: PosterOption | FlyerOption | BusinessCardOption | undefined = options.find(option => option.slug === "custom");
+  return customOption !== undefined ? customOption.customSizes : undefined;
 };
 
-const getHeightRules = customSizes => [
-  v => !!v || "Height is required",
-  v =>
-    v >= customSizes.minHeight ||
+
+const getHeightRules = (customSizes: any) => [
+  (inputValue: number) => !!inputValue || "Height is required",
+  (inputValue: number) =>
+    inputValue >= customSizes.minHeight ||
     `Height must be at least ${customSizes.minHeight} mm`,
-  v =>
-    v <= customSizes.maxHeight ||
+    (inputValue: number) =>
+    inputValue <= customSizes.maxHeight ||
     `Height must be less than ${customSizes.maxHeight} mm`,
 ];
 
-const getWidthRules = customSizes => [
-  v => !!v || "Width is required",
-  v =>
-    v >= customSizes.minWidth ||
+const getWidthRules = (customSizes: any) => [
+(inputValue: number) => !!inputValue || "Width is required",
+(inputValue: number) =>
+    inputValue >= customSizes.minWidth ||
     `Width must be at least ${customSizes.minWidth} mm`,
-  v =>
-    v <= customSizes.maxWidth ||
+    (inputValue: number) =>
+    inputValue <= customSizes.maxWidth ||
     `Width must be less than ${customSizes.maxWidth} mm`,
 ];
 

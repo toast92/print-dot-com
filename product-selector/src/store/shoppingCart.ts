@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 type ShoppingCartProduct = {
   productType: string;
-  properties: [];
+  properties: object;
 };
 
 export const useShoppingCartStore = defineStore("shoppingCart", {
