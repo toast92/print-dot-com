@@ -6,21 +6,21 @@ export interface Product {
 }
 
 export interface Property {
-  slug: string | number;
+  slug: string;
   title: string;
-  options: Option[];
+  options: TOption[];
 }
 
-export interface Option {
+export interface TOption {
   slug: string | number;
   name?: string;
   width?: number | string;
   height?: number | string;
   type?: string;
-  customSizes?: CustomSize;
+  customSizes?: CustomSizes;
 }
 
-export interface CustomSize {
+export interface CustomSizes {
   minWidth: number;
   maxWidth: number;
   minHeight: number;
@@ -34,44 +34,15 @@ export interface ExcludeRule {
 
 export type ExcludeRules = ExcludeRule[] | ExcludeRule[][];
 
-// Business Cards
 export interface BusinessCard extends Product {
-  properties: BusinessCardProperty[];
+  properties: Property[];
 }
 
-export interface BusinessCardProperty extends Property {
-  slug: string;
-  options: BusinessCardOption[];
-}
-
-export interface BusinessCardOption extends Option {
-  customSizes?: CustomSize;
-}
-
-// Flyers
 export interface Flyer extends Product {
-  properties: FlyerProperty[];
+  properties: Property[];
 }
 
-export interface FlyerProperty extends Property {
-  slug: string;
-  options: FlyerOption[];
-}
-
-export interface FlyerOption extends Option {
-  customSizes?: CustomSize;
-}
-
-// Posters
 export interface Poster extends Product {
-  properties: PosterProperty[];
+  properties: Property[];
 }
 
-export interface PosterProperty extends Property {
-  slug: string;
-  options: PosterOption[];
-}
-
-export interface PosterOption extends Option {
-  customSizes?: CustomSize;
-}

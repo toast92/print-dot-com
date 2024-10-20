@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { Poster, Flyer, BusinessCard, PosterOption, FlyerOption, BusinessCardOption, CustomSize } from "../types/productTypes";
-import { ref } from "vue";
+import type { Poster, Flyer, BusinessCard, CustomSizes } from "../types/productTypes";
+import { ref, useTemplateRef } from "vue";
 import { useShoppingCartStore } from "../store/shoppingCart";
+import type { VuetifyRulesObject } from "@/types/vuetifyTypes";
 
 const props = defineProps<{
   productData: Poster | Flyer | BusinessCard;
@@ -10,19 +11,25 @@ const props = defineProps<{
 
 interface ItemProps {
   title: string,
-  value: string
+  value: ItemPropsValue
+}
+
+interface ItemPropsValue {
+    slug: string,
+    customSizes?: CustomSizes
 }
 
 interface Item {
   slug: string | number,
   name?: string,
   type?: string
+  customSizes?: CustomSizes
 }
 
-const selectedValues = ref<Record<string, string | number | null>>({});
+const selectedValues = ref<Record<string, ItemPropsValue>>({});
 const snackbar = ref(false);
 const isFormValid = ref(false);
-const form = ref(null);
+const form = useTemplateRef('form');
 const shoppingCartStore = useShoppingCartStore();
 
 const constructProduct = () => {
@@ -35,7 +42,10 @@ const constructProduct = () => {
 const itemProps = (item: Item): ItemProps => {
   return {
     title: getItemTitle(item),
-    value: getItemSlug(item),
+    value: {
+      slug: getItemSlug(item),
+      customSizes: item.customSizes
+    },
   };
 };
 
@@ -51,13 +61,7 @@ const getItemSlug = (item: Item): string=> {
   return type ? `${base}-${type}` : base;
 };
 
-const getCustomSizeOptions = (options: PosterOption[] | FlyerOption[] | BusinessCardOption[]): CustomSize | undefined=> {
-  const customOption: PosterOption | FlyerOption | BusinessCardOption | undefined = options.find(option => option.slug === "custom");
-  return customOption !== undefined ? customOption.customSizes : undefined;
-};
-
-
-const getHeightRules = (customSizes: any) => [
+const getHeightRules = (customSizes: CustomSizes) => [
   (inputValue: number) => !!inputValue || "Height is required",
   (inputValue: number) =>
     inputValue >= customSizes.minHeight ||
@@ -67,7 +71,7 @@ const getHeightRules = (customSizes: any) => [
     `Height must be less than ${customSizes.maxHeight} mm`,
 ];
 
-const getWidthRules = (customSizes: any) => [
+const getWidthRules = (customSizes: CustomSizes) => [
 (inputValue: number) => !!inputValue || "Width is required",
 (inputValue: number) =>
     inputValue >= customSizes.minWidth ||
@@ -77,7 +81,7 @@ const getWidthRules = (customSizes: any) => [
     `Width must be less than ${customSizes.maxWidth} mm`,
 ];
 
-const validationRules = {
+const validationRules: VuetifyRulesObject = {
   size: [(value: string | number) => !!value || 'Size is required'],
   material: [(value: string | number) => !!value || 'Material is required'],
 };
@@ -105,20 +109,20 @@ const closeSnackbar = () => {
       <template v-for="property in productData.properties" :key="property.slug">
         <v-select
           variant="outlined"
+          v-model="selectedValues[property.slug]"
           :label="property.title"
           :items="property.options"
           :item-props="itemProps"
-          v-model="selectedValues[property.slug]"
           :rules="validationRules[property.slug] || []"
         />
 
-        <div v-if="selectedValues[property.slug] === 'custom'" class="d-flex">
+        <div v-if="selectedValues[property.slug]?.slug === 'custom'" class="d-flex">
           <v-text-field
             variant="outlined"
             class="pr-5 pl-0 v-col-6"
             v-model="selectedValues[property.slug + '_customHeight']"
             label="Height(mm)"
-            :rules="getHeightRules(getCustomSizeOptions(property.options))"
+            :rules="getHeightRules(selectedValues[property.slug].customSizes as CustomSizes)"
             clearable
           ></v-text-field>
 
@@ -127,7 +131,7 @@ const closeSnackbar = () => {
             class="v-col-6"
             v-model="selectedValues[property.slug + '_customWidth']"
             label="Width(mm)"
-            :rules="getWidthRules(getCustomSizeOptions(property.options))"
+            :rules="getWidthRules(selectedValues[property.slug].customSizes as CustomSizes)"
             clearable
           ></v-text-field>
         </div>
