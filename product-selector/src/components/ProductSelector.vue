@@ -7,16 +7,6 @@ const props = defineProps<{
   productData: Poster | Flyer | BusinessCard;
 }>();
 
-const selectedValues = ref<Record<string, string | number | null>>({});
-const snackbar = ref(false);
-const shoppingCartStore = useShoppingCartStore();
-
-const constructProduct = () => {
-  return {
-    productType: props.productData.sku,
-    properties: { ...selectedValues.value },
-  };
-};
 
 interface ItemProps {
   title: string,
@@ -28,6 +18,19 @@ interface Item {
   name?: string,
   type?: string
 }
+
+const selectedValues = ref<Record<string, string | number | null>>({});
+const snackbar = ref(false);
+const isFormValid = ref(false);
+const form = ref(null);
+const shoppingCartStore = useShoppingCartStore();
+
+const constructProduct = () => {
+  return {
+    productType: props.productData.sku,
+    properties: { ...selectedValues.value },
+  };
+};
 
 const itemProps = (item: Item): ItemProps => {
   return {
@@ -74,11 +77,18 @@ const getWidthRules = (customSizes: any) => [
     `Width must be less than ${customSizes.maxWidth} mm`,
 ];
 
+const validationRules = {
+  size: [(value: string | number) => !!value || 'Size is required'],
+  material: [(value: string | number) => !!value || 'Material is required'],
+};
+
 const handleSubmit = () => {
-  const newProduct = constructProduct();
-  shoppingCartStore.addProduct(newProduct);
-  snackbar.value = true;
-  selectedValues.value = {};
+  if (form.value?.validate()) {
+    const newProduct = constructProduct();
+    shoppingCartStore.addProduct(newProduct);
+    snackbar.value = true;
+    selectedValues.value = {};
+  }
 };
 
 const closeSnackbar = () => {
@@ -88,7 +98,7 @@ const closeSnackbar = () => {
 
 <template>
   <div class="d-flex justify-center">
-    <v-form v-if="productData" class="v-col-5 m-auto">
+    <v-form v-if="productData" class="v-col-5 m-auto" v-model="isFormValid" ref="form">
       <template v-for="property in productData.properties" :key="property.slug">
         <v-select
           variant="outlined"
@@ -96,6 +106,7 @@ const closeSnackbar = () => {
           :items="property.options"
           :item-props="itemProps"
           v-model="selectedValues[property.slug]"
+          :rules="validationRules[property.slug] || []"
         />
 
         <div v-if="selectedValues[property.slug] === 'custom'" class="d-flex">
@@ -126,6 +137,7 @@ const closeSnackbar = () => {
           color="action"
           class="mt-2"
           @click="handleSubmit"
+          :disabled="!isFormValid"
           >Add item</v-btn
         >
       </div>
