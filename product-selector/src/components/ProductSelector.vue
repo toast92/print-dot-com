@@ -162,7 +162,6 @@ onBeforeRouteUpdate(() => {
           color="action"
           class="mt-2"
           @click="handleSubmit"
-          :disabled="!isFormValid"
           >Add item</v-btn
         >
       </div>
