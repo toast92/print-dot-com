@@ -11,13 +11,19 @@ import ShoppingCart from "@/components/ShoppingCart.vue";
           class="fw-bold"
           size="large"
           variant="text"
-          :to="{ name: 'posters' }"
+          :to="{ name: 'ProductPage', params: { type: 'posters' } }"
           >Posters</v-btn
         >
-        <v-btn size="large" variant="text" :to="{ name: 'flyers' }"
+        <v-btn
+          size="large"
+          variant="text"
+          :to="{ name: 'ProductPage', params: { type: 'flyers' } }"
           >flyers</v-btn
         >
-        <v-btn size="large" variant="text" :to="{ name: 'businesscards' }"
+        <v-btn
+          size="large"
+          variant="text"
+          :to="{ name: 'ProductPage', params: { type: 'businesscards' } }"
           >Business cards</v-btn
         >
 

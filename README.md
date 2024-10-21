@@ -12,6 +12,15 @@
 
 
 
+
+## Next steps
+Here I define some things I thought of doing, but ran out of time for.
+
+- The routing is dynamic by using a `:type`. Navigating to a `:type` we do not have a JSON for shows an error page, but the page does not provide a way forward for the user. Ideally I want to redirect the user to a page I know exists.
+
+
 ## Learnings
+I always try to consiously reflect on my work and projects. Below there is a list of things that could/should have gone better, at the risk of casting a shade on my own assignment.
+
 - I should have taken better care of my TypeScript implementations along te way. I felt quite time-pressure so I cut some corners, for those corners to only come back and bite me. By having to fix up my TypeScript later on in the project I got none of the benefits of it as I barely iterated after the fixes, while fixing it took quite some effort.
 

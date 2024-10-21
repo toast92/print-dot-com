@@ -4,23 +4,13 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: "/",
-      redirect: "/posters",
+      redirect: "/product",
     },
     {
-      path: "/posters",
-      name: "posters",
-      component: () => import("../views/PostersView.vue"),
-    },
-    {
-      path: "/flyers",
-      name: "flyers",
-      component: () => import("../views/FlyersView.vue"),
-    },
-    {
-      path: "/businesscards",
-      name: "businesscards",
-      component: () => import("../views/BusinessCardsView.vue"),
-    },
+      path: '/product/:type',
+      name: 'ProductPage',
+      component: () => import('@/views/ProductView.vue')
+    }
   ],
 });
 

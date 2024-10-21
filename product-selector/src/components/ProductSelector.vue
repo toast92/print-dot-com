@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onBeforeRouteUpdate } from 'vue-router';
 import type { ItemProps, VuetifyRules, VuetifyRulesObject } from "@/types/vuetifyTypes";
 import type { ProductData, CustomSizes, ProductDataOption } from "@/types/productDataTypes";
 import type { ShoppingCartItem, ShoppingCartItemProperty } from "@/types/shoppingCardTypes";
@@ -87,6 +88,10 @@ const handleSubmit = () => {
 const closeSnackbar = () => {
   snackbar.value = false;
 };
+
+onBeforeRouteUpdate(() => {
+  form.value.reset()
+});
 </script>
 
 <template>
