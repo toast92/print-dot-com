@@ -1,4 +1,4 @@
-import "./assets/main.css";
+import "@/assets/main.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -22,8 +22,6 @@ const vuetify = createVuetify({
           primary: "#5394a7",
           secondary: "#fabc43",
           action: "#f70548",
-          lightpink: "#ffd0d6",
-          lightblue: "#9bd1e2",
           lightgreen: "#DDF2E8",
           text: "#313131",
         },

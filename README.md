@@ -10,3 +10,8 @@
 - I added a v-select where I go over all the properties of a product and display the title of the property as the label and the names of the options as the item titles.
 - I wrapped the v-select in a form and display the selected values underneath it.
 
+
+
+## Learnings
+- I should have taken better care of my TypeScript implementations along te way. I felt quite time-pressure so I cut some corners, for those corners to only come back and bite me. By having to fix up my TypeScript later on in the project I got none of the benefits of it as I barely iterated after the fixes, while fixing it took quite some effort.
+

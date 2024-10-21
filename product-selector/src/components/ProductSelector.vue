@@ -1,69 +1,53 @@
 <script setup lang="ts">
-import type { Poster, Flyer, BusinessCard, CustomSizes } from "../types/productTypes";
+import type { ItemProps, VuetifyRules, VuetifyRulesObject } from "@/types/vuetifyTypes";
+import type { ProductData, CustomSizes, ProductDataOption } from "@/types/productDataTypes";
+import type { ShoppingCartItem, ShoppingCartItemProperty } from "@/types/shoppingCardTypes";
+import { useShoppingCartStore } from "@/store/shoppingCart";
 import { ref, useTemplateRef } from "vue";
-import { useShoppingCartStore, type ShoppingCartProduct } from "../store/shoppingCart";
-import type { VuetifyRulesObject } from "@/types/vuetifyTypes";
 
 const props = defineProps<{
-  productData: Poster | Flyer | BusinessCard;
+  productData: ProductData;
 }>();
 
-
-interface ItemProps {
-  title: string,
-  value: ItemPropsValue
-}
-
-export interface ItemPropsValue {
-    slug: string,
-    title: string,
-    customSizes?: CustomSizes
-}
-
-interface Item {
-  slug: string | number,
-  name?: string,
-  type?: string
-  customSizes?: CustomSizes
-}
-
-const selectedValues = ref<Record<string, ItemPropsValue>>({});
+const selectedValues = ref<Record<string, ShoppingCartItemProperty>>({});
 const snackbar = ref(false);
 const isFormValid = ref(false);
 const form = useTemplateRef('form');
 const shoppingCartStore = useShoppingCartStore();
 
-const constructProduct = (): ShoppingCartProduct => {
+const constructProduct = (): ShoppingCartItem => {
   return {
     productType: props.productData.sku,
     properties: { ...selectedValues.value },
   };
 };
 
-const itemProps = (item: Item): ItemProps => {
+const itemProps = (item: ProductDataOption): ItemProps => {
+  const title = getItemTitle(item)
+
   return {
-    title: getItemTitle(item),
+    title: title,
     value: {
       slug: getItemSlug(item),
-      title: getItemTitle(item),
+      title: title,
       customSizes: item.customSizes,
     },
   };
 };
 
-const getItemTitle = (item: Item): string => {
+const getItemTitle = (item: ProductDataOption): string => {
   const base = item?.name || String(item.slug);
   const type = item?.type || null;
   return type ? `${base}-${type}` : base;
 };
 
-const getItemSlug = (item: Item): string=> {
+const getItemSlug = (item: ProductDataOption): string=> {
   const base = String(item.slug);
   const type = item?.type || null;
   return type ? `${base}-${type}` : base;
 };
 
-const getHeightRules = (customSizes: CustomSizes) => [
+const getHeightRules = (customSizes: CustomSizes): VuetifyRules => [
   (inputValue: number) => !!inputValue || "Height is required",
   (inputValue: number) =>
     inputValue >= customSizes.minHeight ||
@@ -73,7 +57,7 @@ const getHeightRules = (customSizes: CustomSizes) => [
     `Height must be less than ${customSizes.maxHeight} mm`,
 ];
 
-const getWidthRules = (customSizes: CustomSizes) => [
+const getWidthRules = (customSizes: CustomSizes): VuetifyRules => [
 (inputValue: number) => !!inputValue || "Width is required",
 (inputValue: number) =>
     inputValue >= customSizes.minWidth ||
@@ -166,5 +150,3 @@ const closeSnackbar = () => {
     </v-snackbar>
   </div>
 </template>
-
-<style scoped></style>

@@ -1,17 +1,12 @@
-import type { ItemPropsValue } from "@/components/ProductSelector.vue";
 import { defineStore } from "pinia";
-
-export type ShoppingCartProduct = {
-  productType: string;
-  properties: Record<string, ItemPropsValue>;
-};
+import type { ShoppingCartItem } from "@/types/shoppingCardTypes";
 
 export const useShoppingCartStore = defineStore("shoppingCart", {
   state: () => ({
-    products: [] as ShoppingCartProduct[],
+    products: [] as ShoppingCartItem[],
   }),
   actions: {
-    addProduct(product: ShoppingCartProduct) {
+    addProduct(product: ShoppingCartItem) {
       this.products.push(product);
     },
     removeProduct(index: number) {
