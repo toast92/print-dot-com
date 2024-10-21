@@ -90,7 +90,7 @@ const closeSnackbar = () => {
 };
 
 onBeforeRouteUpdate(() => {
-  form.value.reset()
+  form.value?.reset();
 });
 </script>
 
