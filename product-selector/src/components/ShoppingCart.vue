@@ -18,7 +18,6 @@ const shoppingCartStore = useShoppingCartStore();
       <v-list-item
         v-for="(product, index) in shoppingCartStore.products"
         :key="index"
-        :title="product.productType"
       >
         <v-list-item-subtitle
           v-for="(property, index) in product.properties"
