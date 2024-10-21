@@ -1,5 +1,23 @@
 # Print.com Code Challenge
 
+## How to run the project
+
+## Project Setup
+
+```sh
+cd product-selector
+```
+
+```sh
+npm install
+```
+
+## Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
 ## Going over the assignment
 - As a first step I made a small sketch of what I think the page should look like. After that, I thought about how to use the time as wisely as possible, and decided that for now I would skip the validation part as that would be the most time consuming for me, quality > quantity. 
 - Since there is no specific design or UX requirements, I made the decision to use Vuetify as I am somewhat familiar with it and it helps with UX decisions (animations, etc)
@@ -9,18 +27,20 @@
 - Next step is to go over the data for the products and display it on the views I created per product. 
 - I added a v-select where I go over all the properties of a product and display the title of the property as the label and the names of the options as the item titles.
 - I wrapped the v-select in a form and display the selected values underneath it.
-
-
-
+- I added validation to the form
+- I struggled setting up unit tests with vuetify and started regretting my decision to use it :( 
+- Fixed Typescript implementation as it was a bit overcomplicated and some interfaces were not needed.
 
 ## Next steps
 Here I define some things I thought of doing, but ran out of time for.
 
+- Validate if choices are possible using the excludes property
 - The routing is dynamic by using a `:type`. Navigating to a `:type` we do not have a JSON for shows an error page, but the page does not provide a way forward for the user. Ideally I want to redirect the user to a page I know exists.
-
+- Unit tests
 
 ## Learnings
 I always try to consiously reflect on my work and projects. Below there is a list of things that could/should have gone better, at the risk of casting a shade on my own assignment.
 
 - I should have taken better care of my TypeScript implementations along te way. I felt quite time-pressure so I cut some corners, for those corners to only come back and bite me. By having to fix up my TypeScript later on in the project I got none of the benefits of it as I barely iterated after the fixes, while fixing it took quite some effort.
+- I should not have used Vuetify as it brought some complications to my setup of tests which cost me a lot of time. Eventually I gave up on them because of that and decided to spend the rest of my time improving what I had and fixing my Typescript implementation.
 
