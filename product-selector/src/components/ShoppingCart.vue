@@ -19,18 +19,14 @@ const shoppingCartStore = useShoppingCartStore();
         v-for="(product, index) in shoppingCartStore.products"
         :key="index"
       >
+        <template v-slot:prepend>
+          <v-icon @click="shoppingCartStore.removeProduct(index)" color="error">mdi-delete</v-icon>
+        </template>
+
         <v-list-item-subtitle
           v-for="(property, index) in product.properties"
           :key="index"
           >{{ property.title }}</v-list-item-subtitle
-        >
-
-        <v-btn
-          @click="shoppingCartStore.removeProduct(index)"
-          class="text-none text-decoration-underline pa-0"
-          variant="text"
-          color="primary"
-          >Remove</v-btn
         >
       </v-list-item>
     </v-list>
