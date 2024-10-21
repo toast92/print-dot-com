@@ -2,8 +2,8 @@ import type { ShoppingCartItemProperty } from "@/types/shoppingCardTypes";
 
 // v-select
 export interface ItemProps {
-  title: string,
-  value: ShoppingCartItemProperty
+  title: string;
+  value: ShoppingCartItemProperty;
 }
 
 // :rules

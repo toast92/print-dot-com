@@ -5,7 +5,7 @@ const shoppingCartStore = useShoppingCartStore();
 </script>
 
 <template>
-  <v-menu>
+  <v-menu :close-on-content-click="false">
     <template v-slot:activator="{ props }">
       <v-btn v-bind="props" stacked>
         <v-badge color="action" :content="shoppingCartStore.products.length">
@@ -19,8 +19,13 @@ const shoppingCartStore = useShoppingCartStore();
         v-for="(product, index) in shoppingCartStore.products"
         :key="index"
       >
-        <template v-slot:prepend>
-          <v-icon @click="shoppingCartStore.removeProduct(index)" color="error">mdi-delete</v-icon>
+        <template v-slot:append>
+          <v-btn
+            flat
+            @click="shoppingCartStore.removeProduct(index)"
+            icon="mdi-delete"
+          >
+          </v-btn>
         </template>
 
         <v-list-item-subtitle

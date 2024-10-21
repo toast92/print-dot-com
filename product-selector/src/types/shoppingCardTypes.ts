@@ -5,8 +5,8 @@ export type ShoppingCartItem = {
   properties: Record<string, ShoppingCartItemProperty>;
 };
 
-export interface ShoppingCartItemProperty{
-  slug: string,
-  title: string,
-  customSizes?: CustomSizes
+export interface ShoppingCartItemProperty {
+  slug: string;
+  title: string;
+  customSizes?: CustomSizes;
 }

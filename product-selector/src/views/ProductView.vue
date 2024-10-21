@@ -1,35 +1,35 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
-  import { useRoute, onBeforeRouteUpdate } from 'vue-router';
-  import ProductSelector from "@/components/ProductSelector.vue";
+import { ref, onMounted } from "vue";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import ProductSelector from "@/components/ProductSelector.vue";
 
-  const route = useRoute();
-  const productType = ref(null);
-  const jsonData = ref(null);
-  const loading = ref(true);
+const route = useRoute();
+const productType = ref(null);
+const jsonData = ref(null);
+const loading = ref(true);
 
-  const loadJsonData = async (type) => {
-    loading.value = true;
-    try {
-      const jsonFile = await import(`../data/${type}.json`);
-      jsonData.value = jsonFile.default;
-    } catch (error) {
-      console.error('Error loading the JSON file:', error);
-      jsonData.value = { error: 'Failed to load data' };
-    } finally {
-      loading.value = false;
-    }
-  };
+const loadJsonData = async type => {
+  loading.value = true;
+  try {
+    const jsonFile = await import(`../data/${type}.json`);
+    jsonData.value = jsonFile.default;
+  } catch (error) {
+    console.error("Error loading the JSON file:", error);
+    jsonData.value = { error: "Failed to load data" };
+  } finally {
+    loading.value = false;
+  }
+};
 
-  onMounted(() => {
-    productType.value = route.params.type;
-    loadJsonData(productType.value);
-  });
+onMounted(() => {
+  productType.value = route.params.type;
+  loadJsonData(productType.value);
+});
 
-  onBeforeRouteUpdate((to) => {
-    productType.value = to.params.type;
-    loadJsonData(productType.value);
-  });
+onBeforeRouteUpdate(to => {
+  productType.value = to.params.type;
+  loadJsonData(productType.value);
+});
 </script>
 
 <template>
@@ -54,7 +54,9 @@
       variant="outlined"
       prominent
     >
-      There is no <span class="font-weight-bold">{{ route.params.type }}</span> product type. Use the menu to navigate to a different product.
+      There is no
+      <span class="font-weight-bold">{{ route.params.type }}</span> product
+      type. Use the menu to navigate to a different product.
     </v-alert>
   </div>
 </template>
