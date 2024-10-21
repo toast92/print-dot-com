@@ -1,8 +1,9 @@
+import type { ItemPropsValue } from "@/components/ProductSelector.vue";
 import { defineStore } from "pinia";
 
-type ShoppingCartProduct = {
+export type ShoppingCartProduct = {
   productType: string;
-  properties: object;
+  properties: Record<string, ItemPropsValue>;
 };
 
 export const useShoppingCartStore = defineStore("shoppingCart", {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Poster, Flyer, BusinessCard, CustomSizes } from "../types/productTypes";
 import { ref, useTemplateRef } from "vue";
-import { useShoppingCartStore } from "../store/shoppingCart";
+import { useShoppingCartStore, type ShoppingCartProduct } from "../store/shoppingCart";
 import type { VuetifyRulesObject } from "@/types/vuetifyTypes";
 
 const props = defineProps<{
@@ -14,8 +14,9 @@ interface ItemProps {
   value: ItemPropsValue
 }
 
-interface ItemPropsValue {
+export interface ItemPropsValue {
     slug: string,
+    title: string,
     customSizes?: CustomSizes
 }
 
@@ -32,7 +33,7 @@ const isFormValid = ref(false);
 const form = useTemplateRef('form');
 const shoppingCartStore = useShoppingCartStore();
 
-const constructProduct = () => {
+const constructProduct = (): ShoppingCartProduct => {
   return {
     productType: props.productData.sku,
     properties: { ...selectedValues.value },
@@ -44,7 +45,8 @@ const itemProps = (item: Item): ItemProps => {
     title: getItemTitle(item),
     value: {
       slug: getItemSlug(item),
-      customSizes: item.customSizes
+      title: getItemTitle(item),
+      customSizes: item.customSizes,
     },
   };
 };

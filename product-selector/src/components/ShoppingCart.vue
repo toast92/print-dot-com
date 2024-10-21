@@ -23,7 +23,7 @@ const shoppingCartStore = useShoppingCartStore();
         <v-list-item-subtitle
           v-for="(property, index) in product.properties"
           :key="index"
-          >{{ property }}</v-list-item-subtitle
+          >{{ property.title }}</v-list-item-subtitle
         >
 
         <v-btn
